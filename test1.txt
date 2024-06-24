@@ -1,0 +1,3 @@
+https://www.synonyms.com/synonyms_api.php 
+https://www.definitions.net/definitions_api.php 
+https://www.wordsapi.com/docs/ 
