@@ -1,3 +1,4 @@
-https://www.synonyms.com/synonyms_api.php 
-https://www.definitions.net/definitions_api.php 
-https://www.wordsapi.com/docs/ 
+Just in case document
+
+url: #url = "https://www.stands4.com/services/v2/defs.php?uid=12639&tokenid=ovesI5sOYp2iUjQu&word=consistent&format=json"
+curl command: # curl "https://www.stands4.com/services/v2/defs.php?uid=12639&tokenid=ovesI5sOYp2iUjQu&word=consistent&format=json"
