@@ -14,6 +14,7 @@ tokenid = 'jy5TWMF0mBZdg5Bv'
 user_input = ''
 current_word = 'consistent'
 url = ''
+count = 0
 
 # functions
 
@@ -58,11 +59,13 @@ def getDefintion(word, uid, tokenid):
     result = definition['result'][0]['definition']
     return result
 
-print(getDefintion(current_word, uid, tokenid))
+# print(getDefintion(current_word, uid, tokenid))
 
 
 while user_input != QUIT:
-
+	
+	
+	
     # run a question
     current_word = getNewWord(word_list)
 
@@ -70,15 +73,31 @@ while user_input != QUIT:
 
     try:
         # PEP warning being difficult
-        user_input = str(input(f'Define the word {current_word} (or press Q to quit): '))
+        if count == 0:
+            user_input = str(input(f'Define the word {current_word} (or press Q to quit): '))
+            count += 1
+        else:
+            print("\n")
+            user_input = str(input(f'Define the word {current_word} (or press Q to quit): '))
 
     except:
         # Error Catch
         print("how did you mess this up")
+	
+    # gives space between loop iterations
+    print("\n")
 
+	# prevent chatgpt from using "Q" as an input
+    if user_input == QUIT:
+        break
+	
 	# get actual definition
 
     current_definition = getDefintion(current_word, uid, tokenid)
 
 
     useChatGPT(user_input, current_word, current_definition)
+
+	
+
+    
