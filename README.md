@@ -41,3 +41,5 @@ We determine our success via:
 - Outputs (answers and grades) are displayed accurately to the user.
 
 ## Created by Matthew & Brice
+Definitions provided by STANDS4 LLC. © 2024 STANDS4 LLC. All Rights Reserved,
+To visit STANDS4 LLC, please use this link https://www.abbreviations.com/acronym-quiz
