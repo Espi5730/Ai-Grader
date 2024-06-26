@@ -3,6 +3,8 @@ import os
 import requests
 import random
 from words import word_list
+import sqlite3
+
 
 # consts
 QUIT = 'Q'
@@ -16,8 +18,10 @@ uid = '12640'
 tokenid = 'jy5TWMF0mBZdg5Bv'
 user_input = ''
 current_word = 'consistent'
+current_grade = ''
 url = ''
 count = 0
+
 
 # functions
 
@@ -41,10 +45,21 @@ def useChatGPT(user_definition, word_to_define, actual_definition):
                 " a good definition of the word " + word_to_define +
                 " ,based on the following definition: " + actual_definition +
                 " and give the definition a grade" +
-                " using the A-F grading scale."}
+                " using the A-F grading scale in the format of Grade: *Grade* on a new Line." +
+				" Make sure to have the grade be after the explanation."}
             ]
     )
-    print(completion.choices[0].message.content)
+    output = completion.choices[0].message.content
+    print(output)
+
+    tmp = output[-2:]
+    grade = ""
+
+    for letter in tmp:
+        if letter.isalnum():
+            grade += letter
+
+    return grade
 
 
 def getNewWord(word_lst):
@@ -64,6 +79,18 @@ def getDefintion(word, uid, tokenid):
     result = definition['result'][0]['definition']
     return result
 
+# setting up the database
+conn = sqlite3.connect('gradebook.db')
+c = conn.cursor()
+c.execute('''
+    CREATE TABLE IF NOT EXISTS results (
+    questionNumber INTEGER PRIMARY KEY,
+    word TEXT NOT NULL,
+    actualDef TEXT,
+    Grade CHAR
+    )
+''')
+
 
 while user_input != QUIT:
 
@@ -80,6 +107,7 @@ while user_input != QUIT:
         else:
             print("\n")
             user_input = str(input(f'{PROMPT} {current_word} {QUIT_PROMPT}: '))
+            count += 1
 
     except:
         # Error Catch
@@ -96,4 +124,26 @@ while user_input != QUIT:
 
     current_definition = getDefintion(current_word, uid, tokenid)
 
-    useChatGPT(user_input, current_word, current_definition)
+    # send to chatGPT
+
+    current_grade = useChatGPT(user_input, current_word, current_definition)
+
+    # append everything to the database
+    c.execute('''
+        INSERT INTO results (questionNumber, word, actualDef, grade ) 
+        VALUES (?, ?, ?, ?)
+	''', (count, current_word, current_definition, current_grade)
+    )
+
+c.execute(
+    'SELECT * FROM results'
+)
+data = c.fetchall()
+for rows in data:
+    print(rows)
+# remove later maybe
+
+conn.close()
+
+
+
