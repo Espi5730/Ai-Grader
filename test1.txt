@@ -1,7 +1,0 @@
-Just in case document
-
-url: #url = "https://www.stands4.com/services/v2/defs.php?uid=12639&tokenid=ovesI5sOYp2iUjQu&word=consistent&format=json"
-curl command: # curl "https://www.stands4.com/services/v2/defs.php?uid=12639&tokenid=ovesI5sOYp2iUjQu&word=consistent&format=json"
-
-
-RESULT: {'term': 'consistent', 'definition': "(sometimes followed by `with') in agreement or consistent or reliable", 'example': '"testimony consistent with the known facts"; "I have decided that the course of conduct which I am following is consistent with my sense of responsibility as president in time of war"- FDR', 'partofspeech': 'adj'}
