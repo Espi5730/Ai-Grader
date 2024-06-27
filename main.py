@@ -36,19 +36,20 @@ def useChatGPT(user_definition, word_to_define, actual_definition):
 
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a lenient english teacher" +
-                "and can identify whether a phrase is a good is " +
+            messages=[
+             {"role": "system", "content": "You are an english professor and" +
+                " can identify whether a phrase is a good is " +
                 "definition based on a provided definition."},
-            {"role": "user", "content": "Is the following definition: " +
+             {"role": "user", "content": "Is the following definition: " +
                 user_definition +
                 " a good definition of the word " + word_to_define +
                 " ,based on the following definition: " + actual_definition +
-                " and give the definition a grade using the A-F grading" +
-                " scale in the format of Grade: *Grade* on a new Line." +
-                " Make sure to have the grade be after the explanation."}
+                " and give the definition a grade using the A-F grading scale" +
+                " in the format of Grade: *Grade* on a new Line." +
+				" Make sure to have the grade be after the explanation."}
             ]
     )
+
     output = completion.choices[0].message.content
     print(output)
 

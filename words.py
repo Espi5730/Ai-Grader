@@ -10,7 +10,7 @@ word_list = [
     'artist', 'aspect', 'assault',
     'assert', 'assess', 'assign', 'assist', 'assume', 'athlete', 'attempt',
     'attract', 'auction', 'average',
-    'awesome', 'balance', 'barrier', 'battery', 'because', 'benefit',
+    'awesome', 'balance', 'barrier', 'battery', 'benefit',
     'besides', 'between', 'billion', 'biology',
     'bizarre', 'blanket', 'boundary', 'boyfriend', 'breathe', 'briefly',
     'brother', 'builder', 'burning', 'cabinet',

@@ -34,6 +34,7 @@ AI Grader interfaces with:
 ## Risks
 - **ChatGPT hallucination**: ChatGPT might generate incorrect or misleading answers or grades.
 - **User attempts SQL injection**: Malicious Users
+- **Definition API issue**: The asked to be defined does not exist in the Definitions API
 
 ## Success Metrics
 We determine our success via:
