@@ -37,8 +37,8 @@ def useChatGPT(user_definition, word_to_define, actual_definition):
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a lenient english teaher and" +
-                " can identify whether a phrase is a good is " +
+            {"role": "system", "content": "You are a lenient english teacher" +
+                "and can identify whether a phrase is a good is " +
                 "definition based on a provided definition."},
             {"role": "user", "content": "Is the following definition: " +
                 user_definition +
