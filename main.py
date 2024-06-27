@@ -37,16 +37,16 @@ def useChatGPT(user_definition, word_to_define, actual_definition):
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are an english professor and" +
+            {"role": "system", "content": "You are a lenient english teaher and" +
                 " can identify whether a phrase is a good is " +
                 "definition based on a provided definition."},
             {"role": "user", "content": "Is the following definition: " +
                 user_definition +
                 " a good definition of the word " + word_to_define +
                 " ,based on the following definition: " + actual_definition +
-                " and give the definition a grade" +
-                " using the A-F grading scale in the format of Grade: *Grade* on a new Line." +
-				" Make sure to have the grade be after the explanation."}
+                " and give the definition a grade using the A-F grading" +
+                " scale in the format of Grade: *Grade* on a new Line." +
+                " Make sure to have the grade be after the explanation."}
             ]
     )
     output = completion.choices[0].message.content
@@ -79,6 +79,7 @@ def getDefintion(word, uid, tokenid):
     result = definition['result'][0]['definition']
     return result
 
+
 # setting up the database
 conn = sqlite3.connect('gradebook.db')
 c = conn.cursor()
@@ -99,19 +100,13 @@ while user_input != QUIT:
 
     # get user definition
 
-    try:
-        # PEP warning being difficult
-        if count == 0:
-            user_input = str(input(f'{PROMPT} {current_word} {QUIT_PROMPT}: '))
-            count += 1
-        else:
-            print("\n")
-            user_input = str(input(f'{PROMPT} {current_word} {QUIT_PROMPT}: '))
-            count += 1
-
-    except:
-        # Error Catch
-        print("how did you mess this up")
+    if count == 0:
+        user_input = str(input(f'{PROMPT} {current_word} {QUIT_PROMPT}: '))
+        count += 1
+    else:
+        print("\n")
+        user_input = str(input(f'{PROMPT} {current_word} {QUIT_PROMPT}: '))
+        count += 1
 
     # gives space between loop iterations
     print("\n")
@@ -130,20 +125,21 @@ while user_input != QUIT:
 
     # append everything to the database
     c.execute('''
-        INSERT INTO results (questionNumber, word, actualDef, grade ) 
+        INSERT INTO results (questionNumber, word, actualDef, grade )
         VALUES (?, ?, ?, ?)
-	''', (count, current_word, current_definition, current_grade)
+    ''', (count, current_word, current_definition, current_grade)
     )
 
 c.execute(
     'SELECT * FROM results'
 )
+print(f"{'Question':<15}{'Word':<15}{'Grade':<10}")
 data = c.fetchall()
 for rows in data:
-    print(rows)
-# remove later maybe
+    num = str(rows[0])
+    word = str(rows[1])
+    definition = str(rows[2])
+    grade = str(rows[3])
+    print(f"{num:<15}{word:<15}{grade:<10}")
 
 conn.close()
-
-
-
