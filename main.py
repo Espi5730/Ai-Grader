@@ -1,11 +1,40 @@
 from openai import OpenAI
+from words import word_list
+from flask import Flask, render_template, url_for, flash, redirect
+#from forms import RegistrationForm
+from flask_behind_proxy import FlaskBehindProxy
+import secrets
 import os
 import requests
 import random
-from words import word_list
 import sqlite3
 
+#secret key
+key = secrets.token_hex(16)
 
+app = Flask(__name__)
+proxied = FlaskBehindProxy(app)  ## add this line
+
+app.config['SECRET_KEY'] =  key
+
+@app.route("/")
+def main_page():
+    return render_template('home.html', subtitle='Home Page', text='This is the home page')
+    
+@app.route("/report")
+def grade_page():
+    return render_template('report.html', subtitle='Second Page', text='This is the second page')
+
+@app.route("/about")
+def about_page():
+    return render_template('about.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True, host="0.0.0.0")
+
+
+"""
 # consts
 QUIT = 'Q'
 BASE_URL = 'https://www.stands4.com/services/v2/defs.php?uid='
@@ -144,3 +173,4 @@ for rows in data:
     print(f"{num:<15}{word:<15}{grade:<10}")
 
 conn.close()
+"""
