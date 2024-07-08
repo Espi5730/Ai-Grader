@@ -19,7 +19,7 @@ app.config['SECRET_KEY'] =  key
 
 @app.route("/")
 def main_page():
-    return render_template('home.html', subtitle='Home Page', text='This is the home page')
+    return render_template('home.html', subtitle='Home Page', word='This is the word')
     
 @app.route("/report")
 def grade_page():

@@ -7,6 +7,10 @@ body {
   h1, h2, h3, h4, h5, h6 {
     color: #444444;
   }
+
+  p {
+    font-size: large;
+  }
   
   .bg-steel {
     background-color: #ffdb5c;
@@ -82,4 +86,22 @@ body {
 
   #title {
     color: #111111;
+  }
+
+  #home-title {
+    text-align: center;
+    font-size: xx-large;
+  }
+
+  #introduction{
+    padding-left: 30px;
+    padding-right: 15px;
+    margin-top: 20px;
+    width: 100%;
+    border-left:10px solid lightskyblue ;
+    background-color: #f1f1f1;
+  }
+
+  .center {
+    text-align: center;
   }
