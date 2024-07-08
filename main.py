@@ -4,6 +4,7 @@ import requests
 import random
 from words import word_list
 import sqlite3
+# from flask import Flask
 
 
 # consts
@@ -25,8 +26,11 @@ count = 0
 
 # functions
 
-
+# @app.route("/")
+# @app.route("/index")
 def useChatGPT(user_definition, word_to_define, actual_definition):
+
+    # figure out how to replace user_definition with flask requests
 
     my_api_key = os.getenv('OPENAI_KEY')
 
@@ -90,8 +94,18 @@ c.execute('''
     word TEXT NOT NULL,
     actualDef TEXT,
     Grade CHAR
-    )
+    ) 
 ''')
+
+# old code 
+# c.execute('''
+#     CREATE TABLE IF NOT EXISTS results (
+#     questionNumber INTEGER PRIMARY KEY,
+#     word TEXT NOT NULL,
+#     actualDef TEXT,
+#     Grade CHAR
+#     ) AUTO_INCREMENT = 1;
+# ''')
 
 
 while user_input != QUIT:
@@ -126,10 +140,17 @@ while user_input != QUIT:
 
     # append everything to the database
     c.execute('''
-        INSERT INTO results (questionNumber, word, actualDef, grade )
-        VALUES (?, ?, ?, ?)
-    ''', (count, current_word, current_definition, current_grade)
+        INSERT INTO results (word, actualDef, grade )
+        VALUES (?, ?, ?)
+    ''', (current_word, current_definition, current_grade)
     )
+
+    # old code again
+    # c.execute('''
+    #     INSERT INTO results (questionNumber, word, actualDef, grade )
+    #     VALUES (?, ?, ?, ?)
+    # ''', (count, current_word, current_definition, current_grade)
+    # )
 
 c.execute(
     'SELECT * FROM results'
@@ -143,4 +164,9 @@ for rows in data:
     grade = str(rows[3])
     print(f"{num:<15}{word:<15}{grade:<10}")
 
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
+# this is why the code will break most likely
+conn.commit()
 conn.close()
