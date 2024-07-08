@@ -13,7 +13,7 @@ import sqlite3
 key = secrets.token_hex(16)
 
 app = Flask(__name__)
-proxied = FlaskBehindProxy(app)  ## add this line
+proxied = FlaskBehindProxy(app) 
 
 app.config['SECRET_KEY'] =  key
 
