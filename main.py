@@ -8,7 +8,7 @@ import os
 import requests
 import random
 import sqlite3
-
+#random extra text
 
 # consts
 QUIT = 'Q'
