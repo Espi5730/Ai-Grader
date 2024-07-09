@@ -56,7 +56,7 @@ def useChatGPT(user_definition, word_to_define, actual_definition):
     )
 
     output = completion.choices[0].message.content
-    print(output)
+    #print(output)
 
     tmp = output[-2:]
     grade = ""
@@ -65,7 +65,9 @@ def useChatGPT(user_definition, word_to_define, actual_definition):
         if letter.isalnum():
             grade += letter
 
-    return grade
+    result = (output, grade)
+
+    return result
 
 
 def getNewWord(word_lst):
@@ -98,8 +100,9 @@ def main_page():
     word = getNewWord(word_list)
     form = userPrompt()
     if form.validate_on_submit():
-        return render_template('home.html', word=getNewWord(word_list), form=form, response=useChatGPT(form.getDefintion(), word, getDefintion(word, uid, tokenid)))
-    return render_template('home.html', word=word, form=form,)
+        output = useChatGPT(str(form.getDefintion()), word, getDefintion(word, uid, tokenid))
+        return render_template('home.html', word=getNewWord(word_list), form=form, message=output[0] , grade=output[1])
+    return render_template('home.html', word=word, form=form)
     
 @app.route("/report")
 def grade_page():
