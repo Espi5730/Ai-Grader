@@ -10,6 +10,7 @@ import requests
 import random
 import sqlite3
 #random extra text
+#more random extra text
 
 # consts
 QUIT = 'Q'
