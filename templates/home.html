@@ -8,11 +8,33 @@
         <h3>Your word is: {{ word }}</h3>
     </div>
     <div id="response" class="center">
-        <p > Place for ChatGPT response</p>
+        <p> Place for ChatGPT response</p>
     </div>
-    <form class="center input" action="/submit" method="post">
-        <label for="definition">Definition:</label><br>
-        <textarea id="definition" placeholder="Write your definition here!" name="definition"></textarea>
-        <input type="submit" value="Submit">
-    </form>
+    
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.definition.label(class="form-control-label") }}
+                    {% if form.definition.errors %}
+                    {{ form.definition(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.definition.errors%}
+                            <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                        {{ form.definition(class="form-control form-control-lg") }}
+                   {% endif %}
+               </div> 
+            </fieldset>
+
+           <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+     </div>
+
+
 {% endblock content %}
