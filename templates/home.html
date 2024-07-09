@@ -5,7 +5,14 @@
         <p>Welcome to AI Grader, your personalized tool for mastering vocabulary through repition! Designed to help enhance your vocabulary, AI Grader offers a simple platform where you can test your knowledge with an assortment of words and their correlating definitions. Answer questions, receive instant feedback from ChatGPT, and track your progress as your grades update in real-time. Whether you're studying solo or in a group, AI Grader is here to support your academic success with accurate assessments and insightful learning opportunities.</p>
     </div>
     <div class="center">
-        <h3>Your word is:</h3>
-        <h3>{{ word }}</h3>
+        <h3>Your word is: {{ word }}</h3>
     </div>
+    <div id="response" class="center">
+        <p > Place for ChatGPT response</p>
+    </div>
+    <form class="center input" action="/submit" method="post">
+        <label for="definition">Definition:</label><br>
+        <textarea id="definition" placeholder="Write your definition here!" name="definition"></textarea>
+        <input type="submit" value="Submit">
+    </form>
 {% endblock content %}
