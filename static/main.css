@@ -22,7 +22,18 @@
     padding-left: 0px;
     padding-right: 0px;
   }
+  
+  table {
+    border: 2px solid black
+  }
 
+  tr {
+    border: 2px solid black;
+  }
+
+  th {
+    border: 2px solid black;
+  }
   
   .bg-steel {
     background-color: #ffdb5c;
