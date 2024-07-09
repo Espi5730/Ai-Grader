@@ -1,11 +1,14 @@
-from openai import OpenAI
+#from openai import OpenAI
+from words import word_list
+from flask import Flask, render_template, url_for, flash, redirect
+from forms import userPrompt
+from flask_behind_proxy import FlaskBehindProxy
+import secrets
 import os
 import requests
 import random
-from words import word_list
 import sqlite3
-# from flask import Flask
-
+#random extra text
 
 # consts
 QUIT = 'Q'
@@ -23,11 +26,8 @@ current_grade = ''
 url = ''
 count = 0
 
-
 # functions
 
-# @app.route("/")
-# @app.route("/index")
 def useChatGPT(user_definition, word_to_define, actual_definition):
 
     # figure out how to replace user_definition with flask requests
@@ -85,6 +85,35 @@ def getDefintion(word, uid, tokenid):
     return result
 
 
+
+#secret key
+key = secrets.token_hex(16)
+
+app = Flask(__name__)
+proxied = FlaskBehindProxy(app) 
+
+app.config['SECRET_KEY'] =  key
+
+@app.route("/", methods=['GET', 'POST'])
+def main_page():
+    form = userPrompt()
+    if form.validate_on_submit():
+        return redirect(url_for('home'))
+    return render_template('home.html', word=getNewWord(word_list), form=form)
+    
+@app.route("/report")
+def grade_page():
+    return render_template('report.html', subtitle='Second Page', text='This is the second page')
+
+@app.route("/about")
+def about_page():
+    return render_template('about.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True, host="0.0.0.0")
+
+"""
 # setting up the database
 conn = sqlite3.connect('gradebook.db')
 c = conn.cursor()
@@ -170,3 +199,5 @@ for rows in data:
 # this is why the code will break most likely
 conn.commit()
 conn.close()
+
+"""
