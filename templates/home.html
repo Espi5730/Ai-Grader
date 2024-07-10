@@ -1,0 +1,40 @@
+{% extends "header.html" %}
+{% block content %}
+    <h2 id="home-title">AI Grader</h2>
+    <div id="introduction">
+        <p>Welcome to AI Grader, your personalized tool for mastering vocabulary through repition! Designed to help enhance your vocabulary, AI Grader offers a simple platform where you can test your knowledge with an assortment of words and their correlating definitions. Answer questions, receive instant feedback from ChatGPT, and track your progress as your grades update in real-time. Whether you're studying solo or in a group, AI Grader is here to support your academic success with accurate assessments and insightful learning opportunities.</p>
+    </div>
+    <div class="center">
+        <h3>Your word is: {{ word }}</h3>
+    </div>
+    <div id="response" class="center">
+        <p>{{ message }}</p>
+    </div>
+    <div class="center">
+        <p>{{ grade }}</p>
+    </div>
+    
+    <div id="definition-input" class="content-section">
+        <form method="POST" action="" class="form-inline">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="definition">Type Below</label>
+                {% if form.definition.errors %}
+                {{ form.definition(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.definition.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.definition(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group button-group">
+                {{ form.submit(id="input-button", class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+
+{% endblock content %}

@@ -5,7 +5,7 @@
 AI Grader is a project designed to helping students study vocabulary via repetition. Using questions from an API, students can respond to relevant questions and receive real time grading by ChatGPT.
 
 ## Problem we are Solving
-We are helping students study on vocabulary by giving them many questions focused around  words and their definitions.
+We are helping students study on vocabulary by giving them many questions focused around words and their definitions.
 
 ## Project Interface
 AI Grader interfaces with:

@@ -1,10 +1,16 @@
 from openai import OpenAI
+from words import word_list
+from flask import Flask, render_template, url_for, flash, redirect
+from forms import userPrompt
+from flask_behind_proxy import FlaskBehindProxy
+from bs4 import BeautifulSoup
+import secrets
 import os
 import requests
 import random
-from words import word_list
 import sqlite3
-
+#random extra text
+#more random extra text
 
 # consts
 QUIT = 'Q'
@@ -22,11 +28,11 @@ current_grade = ''
 url = ''
 count = 0
 
-
 # functions
 
-
 def useChatGPT(user_definition, word_to_define, actual_definition):
+
+    # figure out how to replace user_definition with flask requests
 
     my_api_key = os.getenv('OPENAI_KEY')
 
@@ -51,7 +57,7 @@ def useChatGPT(user_definition, word_to_define, actual_definition):
     )
 
     output = completion.choices[0].message.content
-    print(output)
+    #print(output)
 
     tmp = output[-2:]
     grade = ""
@@ -60,7 +66,9 @@ def useChatGPT(user_definition, word_to_define, actual_definition):
         if letter.isalnum():
             grade += letter
 
-    return grade
+    result = (output, grade)
+
+    return result
 
 
 def getNewWord(word_lst):
@@ -80,7 +88,35 @@ def getDefintion(word, uid, tokenid):
     result = definition['result'][0]['definition']
     return result
 
+#secret key
+key = secrets.token_hex(16)
 
+app = Flask(__name__)
+proxied = FlaskBehindProxy(app) 
+
+app.config['SECRET_KEY'] =  key
+
+@app.route("/", methods=['GET', 'POST'])
+def main_page():
+    word = getNewWord(word_list)
+    form = userPrompt()
+    if form.validate_on_submit():
+        output = useChatGPT(str(form.getDefintion()), word, getDefintion(word, uid, tokenid))
+        return render_template('home.html', word=getNewWord(word_list), form=form, message=output[0] , grade=output[1])
+    return render_template('home.html', word=word, form=form)
+    
+@app.route("/report")
+def grade_page():
+    return render_template('report.html', subtitle='Second Page', text='This is the second page')
+
+@app.route("/about")
+def about_page():
+    return render_template('about.html')
+
+if __name__ == '__main__':
+    app.run(debug=True, host="0.0.0.0")
+
+"""
 # setting up the database
 conn = sqlite3.connect('gradebook.db')
 c = conn.cursor()
@@ -90,8 +126,18 @@ c.execute('''
     word TEXT NOT NULL,
     actualDef TEXT,
     Grade CHAR
-    )
+    ) 
 ''')
+
+# old code 
+# c.execute('''
+#     CREATE TABLE IF NOT EXISTS results (
+#     questionNumber INTEGER PRIMARY KEY,
+#     word TEXT NOT NULL,
+#     actualDef TEXT,
+#     Grade CHAR
+#     ) AUTO_INCREMENT = 1;
+# ''')
 
 
 while user_input != QUIT:
@@ -126,10 +172,17 @@ while user_input != QUIT:
 
     # append everything to the database
     c.execute('''
-        INSERT INTO results (questionNumber, word, actualDef, grade )
-        VALUES (?, ?, ?, ?)
-    ''', (count, current_word, current_definition, current_grade)
+        INSERT INTO results (word, actualDef, grade )
+        VALUES (?, ?, ?)
+    ''', (current_word, current_definition, current_grade)
     )
+
+    # old code again
+    # c.execute('''
+    #     INSERT INTO results (questionNumber, word, actualDef, grade )
+    #     VALUES (?, ?, ?, ?)
+    # ''', (count, current_word, current_definition, current_grade)
+    # )
 
 c.execute(
     'SELECT * FROM results'
@@ -143,4 +196,11 @@ for rows in data:
     grade = str(rows[3])
     print(f"{num:<15}{word:<15}{grade:<10}")
 
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
+# this is why the code will break most likely
+conn.commit()
 conn.close()
+
+"""
