@@ -9,6 +9,7 @@ import os
 import requests
 import random
 import sqlite3
+import pandas as pd
 #random extra text
 #more random extra text
 
@@ -31,7 +32,7 @@ count = 0
 # functions
 def addDatabase(chat_gpt_response,word):
         c.execute('''
-        INSERT INTO results (word,grade )
+        INSERT INTO results (word,grade)
         VALUES (?, ?)
     ''', (word,chat_gpt_response[1])
     )
@@ -108,6 +109,10 @@ c.execute('''
 ''')
 
 
+    
+
+
+
 app = Flask(__name__)
 proxied = FlaskBehindProxy(app) 
 
@@ -125,11 +130,32 @@ def main_page():
     
 @app.route("/report")
 def grade_page():
-    return render_template('report.html', subtitle='Second Page', text='This is the second page')
+    tmp=c.execute('SELECT * FROM results')
+    # df=pd.DataFrame(tmp.fetchall())
+    # df.columns=tmp.keys()
+    html = tmp
+    return render_template('report.html',table=html)
+    # return render_template('report.html', subtitle='Second Page', text='This is the second page')
 
 @app.route("/about")
 def about_page():
     return render_template('about.html')
+
+# @app.route("/report")
+# def displayData():
+#     tmp=c.execute('SELECT * FROM results')
+#     df=pd.DataFrame(tmp.fetchall())
+#     df.columns=tmp.keys()
+#     html = df.to_html()
+#     return render_template('report.html',table=html)
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
