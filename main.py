@@ -29,9 +29,15 @@ url = ''
 count = 0
 
 # functions
+def addDatabase(chat_gpt_response,word):
+        c.execute('''
+        INSERT INTO results (word,grade )
+        VALUES (?, ?)
+    ''', (word,chat_gpt_response[1])
+    )
 
 def useChatGPT(user_definition, word_to_define, actual_definition):
-
+    
     # figure out how to replace user_definition with flask requests
 
     my_api_key = os.getenv('OPENAI_KEY')
@@ -52,7 +58,7 @@ def useChatGPT(user_definition, word_to_define, actual_definition):
              " ,based on the following definition: " + actual_definition +
              " and give the definition a grade using the A-F grading scale" +
              " in the format of Grade: *Grade* on a new Line." +
-             " Make sure to have the grade be after the explanation."}
+             " Give the explanation first, then display the grade after the explanation. Don't display the grade first before the explanation"}
             ]
     )
 
@@ -90,6 +96,17 @@ def getDefintion(word, uid, tokenid):
 
 #secret key
 key = secrets.token_hex(16)
+# setting up the database
+conn =  sqlite3.connect('gradebook.db', check_same_thread=False)
+c = conn.cursor()
+c.execute('''
+    CREATE TABLE IF NOT EXISTS results (
+    questionNumber INTEGER PRIMARY KEY,
+    word TEXT NOT NULL,
+    Grade CHAR
+    ) 
+''')
+
 
 app = Flask(__name__)
 proxied = FlaskBehindProxy(app) 
@@ -102,6 +119,7 @@ def main_page():
     form = userPrompt()
     if form.validate_on_submit():
         output = useChatGPT(str(form.getDefintion()), word, getDefintion(word, uid, tokenid))
+        addDatabase(output,word)
         return render_template('home.html', word=getNewWord(word_list), form=form, message=output[0] , grade=output[1])
     return render_template('home.html', word=word, form=form)
     
@@ -124,20 +142,11 @@ c.execute('''
     CREATE TABLE IF NOT EXISTS results (
     questionNumber INTEGER PRIMARY KEY,
     word TEXT NOT NULL,
-    actualDef TEXT,
     Grade CHAR
     ) 
 ''')
 
-# old code 
-# c.execute('''
-#     CREATE TABLE IF NOT EXISTS results (
-#     questionNumber INTEGER PRIMARY KEY,
-#     word TEXT NOT NULL,
-#     actualDef TEXT,
-#     Grade CHAR
-#     ) AUTO_INCREMENT = 1;
-# ''')
+
 
 
 while user_input != QUIT:
@@ -168,21 +177,15 @@ while user_input != QUIT:
 
     # send to chatGPT
 
-    current_grade = useChatGPT(user_input, current_word, current_definition)
+    grade_response = useChatGPT(userPrompt, current_word, current_definition)
 
     # append everything to the database
     c.execute('''
         INSERT INTO results (word, actualDef, grade )
         VALUES (?, ?, ?)
-    ''', (current_word, current_definition, current_grade)
+    ''', (grade_response[1], current_definition, current_grade)
     )
 
-    # old code again
-    # c.execute('''
-    #     INSERT INTO results (questionNumber, word, actualDef, grade )
-    #     VALUES (?, ?, ?, ?)
-    # ''', (count, current_word, current_definition, current_grade)
-    # )
 
 c.execute(
     'SELECT * FROM results'
