@@ -7,5 +7,12 @@
             <th>Word</th>
             <th>Grade</th>
         </tr>
+         {% for row in table %}
+        <tr>
+            <td>{{ row[0] }}</td> <!-- Assuming column 1 is question_number -->
+            <td>{{ row[1] }}</td> <!-- Assuming column 2 is word -->
+            <td>{{ row[2] }}</td> <!-- Assuming column 3 is grade -->
+        </tr>
+        {% endfor %}
     </table>
 {% endblock content %}
