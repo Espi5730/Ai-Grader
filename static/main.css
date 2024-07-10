@@ -118,6 +118,7 @@
   #home-title {
     text-align: center;
     font-size: 2.5rem;
+    border-bottom: 11px grey solid;
   }
 
   #introduction{
@@ -148,6 +149,10 @@
   }
 
   #definition {
+    width:100%;
+  }
+
+  #definition-input {
 
     padding-left: 30px;
     padding-right: 15px;
@@ -158,4 +163,14 @@
     font-size: 1.5rem;
     background-color: #f1f1f1;
   }
+
+  #input-button{
+    background-color: #222222;
+    color: #ffdb5c;
+    border-color: #ffdb5c;
+    height: 48px;
+  }
+
+
+  
   
