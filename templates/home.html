@@ -1,5 +1,6 @@
 {% extends "header.html" %}
 {% block content %}
+<div id="home-content">
     <h2 id="home-title">AI Grader</h2>
     <div id="introduction">
         <p>Welcome to AI Grader, your personalized tool for mastering vocabulary through repition! Designed to help enhance your vocabulary, AI Grader offers a simple platform where you can test your knowledge with an assortment of words and their correlating definitions. Answer questions, receive instant feedback from ChatGPT, and track your progress as your grades update in real-time. Whether you're studying solo or in a group, AI Grader is here to support your academic success with accurate assessments and insightful learning opportunities.</p>
@@ -10,12 +11,9 @@
     <div id="response" class="center">
         <p>{{ message }}</p>
     </div>
-    <div class="center">
-        <p>{{ grade }}</p>
-    </div>
-    
+
     <div id="definition-input" class="content-section">
-        <form method="POST" action="" class="form-inline center-form">
+        <form method="POST" action="" autocomplete="off" class="form-inline center-form">
             {{ form.hidden_tag() }}
             <div class="form-group">
                 <label for="definition">Type Below</label>
@@ -35,6 +33,5 @@
             </div>
         </form>
     </div>
-    
-
+</div>
 {% endblock content %}
