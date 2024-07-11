@@ -88,9 +88,7 @@ def getNewWord(word_lst):
 def getDefintion(word, uid, tokenid):
     # PEP warning being difficult
     url = BASE_URL + uid + "&tokenid=" + tokenid + "&word=" + word + FORMAT
-
     response = requests.get(url, headers={'User-Agent': 'curl/7.81.0'})
-
     definition = response.json()
     result = definition['result'][0]['definition']
     return result
@@ -108,11 +106,6 @@ c.execute('''
     ) 
 ''')
 
-
-    
-
-
-
 app = Flask(__name__)
 proxied = FlaskBehindProxy(app) 
 
@@ -124,14 +117,10 @@ def main_page():
 
     if request.method == 'POST' and form.validate_on_submit():
         user_definition = form.getDefintion()
-
-        
         word = form.word.data
         output = useChatGPT(str(user_definition), word, getDefintion(word, uid, tokenid))
-
-        
         form.word.data = getNewWord(word_list)
-
+        addDatabase(output,word)
         return render_template('home.html', form=form, message=output[0], grade=output[1], word=form.word.data)
 
     form.word.data = getNewWord(word_list)
@@ -140,11 +129,8 @@ def main_page():
 @app.route("/report")
 def grade_page():
     tmp=c.execute('SELECT * FROM results')
-    # df=pd.DataFrame(tmp.fetchall())
-    # df.columns=tmp.keys()
     html = tmp
     return render_template('report.html',table=html)
-    # return render_template('report.html', subtitle='Second Page', text='This is the second page')
 
 @app.route("/about")
 def about_page():

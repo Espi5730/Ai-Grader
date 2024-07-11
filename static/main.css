@@ -39,6 +39,12 @@
     text-align: center;
   }
   
+  td {
+    border: 2px solid black;
+    width: 33%;
+    text-align: center;
+  }
+  
   .bg-steel {
     background-color: #ffdb5c;
     border-bottom: 3px #222222 solid;
