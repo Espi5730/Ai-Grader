@@ -1,6 +1,6 @@
 from openai import OpenAI
 from words import word_list
-from flask import Flask, render_template, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, request
 from forms import userPrompt
 from flask_behind_proxy import FlaskBehindProxy
 from bs4 import BeautifulSoup
@@ -119,13 +119,14 @@ proxied = FlaskBehindProxy(app)
 app.config['SECRET_KEY'] =  key
 
 @app.route("/", methods=['GET', 'POST'])
-def main_page():
+def main_page():    
     word = getNewWord(word_list)
     form = userPrompt()
     if form.validate_on_submit():
         output = useChatGPT(str(form.getDefintion()), word, getDefintion(word, uid, tokenid))
         addDatabase(output,word)
-        return render_template('home.html', word=getNewWord(word_list), form=form, message=output[0] , grade=output[1])
+        return render_template('home.html',word=word, form=form, message=output[0] , grade=output[1])
+
     return render_template('home.html', word=word, form=form)
     
 @app.route("/report")
