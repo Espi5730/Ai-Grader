@@ -2,7 +2,7 @@
 word_list = [
     'ability', 'abroad', 'absence', 'academy', 'account', 'accuse', 'achieve',
     'acquire', 'address', 'advance',
-    'advice', 'affect', 'afford', 'against', 'airline', 'airport', 'alcohol',
+    'advice', 'affect', 'afford', 'against', 'airport', 'alcohol',
     'alleged', 'already', 'amazing',
     'analyst', 'analyze', 'ancient', 'anger', 'animal', 'announce', 'anxiety',
     'anybody', 'apology', 'appeal',

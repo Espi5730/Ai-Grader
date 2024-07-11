@@ -16,9 +16,21 @@ p {
   font-size: 1.3rem;
 }
 
-main {
+.main {
+  margin-top: 20px;
   padding-top: 40px;
-  background-color: #f1f1f1;
+  vertical-align: middle;
+  background-color: #F1F1F1;
+  padding-left: 0px;
+  padding-right: 0px;
+  justify-content: center;
+  align-items: center;
+}
+
+#home-content {
+  margin-top: 200px;
+  padding-top: 40px;
+  background-color: #F1F1F1;
   padding-left: 0px;
   padding-right: 0px;
 }
@@ -64,13 +76,6 @@ td {
   font-weight: 500;
 }
 
-.content-section {
-  background: #ffffff;
-  padding: 10px 20px;
-  border: 1px solid #dddddd;
-  border-radius: 3px;
-  margin-bottom: 20px;
-}
 
 .article-title {
   color: #444444;
@@ -125,23 +130,6 @@ a.article-title:hover {
   margin-right: 32px;
 }
 
-#home-title {
-  text-align: center;
-  font-size: 2.5rem;
-  border-bottom: 1px grey solid;
-}
-
-#introduction{
-  padding-top: 15px;
-  padding-bottom: 5px;
-  padding-left: 30px;
-  padding-right: 15px;
-  margin-top: 25px;
-  margin-bottom: 30px;
-  width: 100%;
-  border-left:10px solid lightskyblue;
-  font-size: 1.5rem;
-}
 
 .center {
   text-align: center;
@@ -152,14 +140,15 @@ a.article-title:hover {
   padding-left: 30px;
   padding-right: 15px;
   margin-top: 20px;
-  border-left:10px solid lightskyblue;
-  border-right:10px solid lightskyblue; ;
+  /* border-left:10px solid lightskyblue; */
+  /* border-right:10px solid lightskyblue; ; */
   font-size: 1.5rem;
   background-color: #f1f1f1;
 }
 
 #definition {
   width:100%;
+  margin-top: 10px;
 }
 
 #definition-input {
@@ -168,20 +157,19 @@ a.article-title:hover {
   padding-right: 15px;
   margin-top: 20px;
   width: 100%;
-  border-left:10px solid lightskyblue;
-  border-top: 2px solid lightgray;
+  /* border-left:10px solid lightskyblue; */
+  border-top: 1px solid lightgray;
   font-size: 1.5rem;
   background-color: #f1f1f1;
 }
 
 #input-button{
+  margin-top: 10px;
   background-color: #222222;
   color: #ffdb5c;
-  border-color: #ffdb5c;
+  border-color: #000000;
   height: 48px;
 }
-
-
 
 .team-container {
   display: flex; 
@@ -271,18 +259,20 @@ a.article-title:hover {
 #home-title {
   text-align: center;
   font-size: 2.5rem;
-  border-bottom: 1px grey solid;
+  /* border-bottom: 1px grey solid; */
   padding-bottom: 20px;
 }
 
-#introduction {
-  padding: 15px 30px;
-  margin: 25px auto;
-  width: 80%;
-  border-left: 10px solid lightskyblue;
+#introduction{
+  padding-top: 15px;
+  padding-bottom: 5px;
+  padding-left: 30px;
+  padding-right: 15px;
+  margin-top: 25px;
+  margin-bottom: 30px;
+  width: 100%;
+  /* border-left:10px solid lightskyblue; */
   font-size: 1.5rem;
-  background-color: #ffffff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .center {
